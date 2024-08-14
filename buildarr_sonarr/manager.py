@@ -13,8 +13,9 @@
 
 
 """
-Sonarr plugin manager class.
+Plugin manager class.
 """
+
 
 from __future__ import annotations
 

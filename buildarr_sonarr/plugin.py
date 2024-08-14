@@ -13,8 +13,9 @@
 
 
 """
-Sonarr plugin interface.
+Buildarr plugin interface.
 """
+
 
 from __future__ import annotations
 
@@ -29,7 +30,7 @@ from .secrets import SonarrSecrets
 
 class SonarrPlugin(Plugin):
     """
-    Sonarr plugin class that Buildarr reads to process Sonarr instances.
+    Plugin class that Buildarr reads to process Sonarr instances.
     """
 
     cli = sonarr

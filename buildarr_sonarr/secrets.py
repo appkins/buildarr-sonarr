@@ -13,29 +13,41 @@
 
 
 """
-Sonarr plugin secrets file model.
+Plugin secrets file model.
 """
+
 
 from __future__ import annotations
 
 from http import HTTPStatus
-from typing import TYPE_CHECKING, Any, Dict, Optional, cast
+from typing import TYPE_CHECKING, Optional, cast
+
+import sonarr
 
 from buildarr.secrets import SecretsPlugin
 from buildarr.types import NonEmptyStr, Port
-from pydantic import field_validator
+from pydantic import validator
+from sonarr.exceptions import UnauthorizedException
 
-from .api import api_get, get_initialize_js
+from .api import api_get, sonarr_api_client
 from .exceptions import SonarrAPIError, SonarrSecretsUnauthorizedError
-from .types import SonarrApiKey, SonarrProtocol
+from .types import ArrApiKey, SonarrProtocol
 
 if TYPE_CHECKING:
     from typing_extensions import Self
 
     from .config import SonarrConfig
 
+    class _SonarrSecrets(SecretsPlugin[SonarrConfig]):
+        ...
 
-class SonarrSecrets(SecretsPlugin["SonarrConfig"]):
+else:
+
+    class _SonarrSecrets(SecretsPlugin):
+        ...
+
+
+class SonarrSecrets(_SonarrSecrets):
     """
     Sonarr API secrets.
     """
@@ -44,7 +56,7 @@ class SonarrSecrets(SecretsPlugin["SonarrConfig"]):
     port: Port
     protocol: SonarrProtocol
     url_base: Optional[str]
-    api_key: SonarrApiKey
+    api_key: ArrApiKey
     version: NonEmptyStr
 
     @property
@@ -56,13 +68,8 @@ class SonarrSecrets(SecretsPlugin["SonarrConfig"]):
             url_base=self.url_base,
         )
 
-    @field_validator("url_base")
-    @classmethod
+    @validator("url_base")
     def validate_url_base(cls, value: Optional[str]) -> Optional[str]:
-        return cls._validate_url_base(value)
-
-    @classmethod
-    def _validate_url_base(cls, value: Optional[str]) -> Optional[str]:
         return f"/{value.strip('/')}" if value and value.strip("/") else None
 
     @classmethod
@@ -94,7 +101,7 @@ class SonarrSecrets(SecretsPlugin["SonarrConfig"]):
         url_base: Optional[str] = None,
         api_key: Optional[str] = None,
     ) -> Self:
-        url_base = cls._validate_url_base(url_base)
+        url_base = cls.validate_url_base(url_base)
         host_url = cls._get_host_url(
             protocol=protocol,
             hostname=hostname,
@@ -103,59 +110,42 @@ class SonarrSecrets(SecretsPlugin["SonarrConfig"]):
         )
         if not api_key:
             try:
-                initialize_js = get_initialize_js(host_url)
+                initialize_json = api_get(host_url, "/initialize.json")
             except SonarrAPIError as err:
                 if err.status_code == HTTPStatus.UNAUTHORIZED:
                     raise SonarrSecretsUnauthorizedError(
                         (
                             "Unable to retrieve the API key for the Sonarr instance "
                             f"at '{host_url}': Authentication is enabled. "
-                            "Please set the 'Settings -> General -> Authentication' attribute "
-                            "to 'None', or if you do not wish to disable authentication, "
+                            "Please try manually setting the "
+                            "'Settings -> General -> Authentication Required' attribute "
+                            "to 'Disabled for Local Addresses', or if that does not work, "
                             "explicitly define the API key in the Buildarr configuration."
                         ),
                     ) from None
                 else:
                     raise
             else:
-                api_key = initialize_js["apiKey"]
+                api_key = initialize_json["apiKey"]
         try:
-            system_status = cast(
-                Dict[str, Any],
-                api_get(host_url, "/api/v3/system/status", api_key=api_key),
-            )
-        except SonarrAPIError as err:
-            if err.status_code == HTTPStatus.UNAUTHORIZED:
-                raise SonarrSecretsUnauthorizedError(
-                    (
-                        f"Incorrect API key for the Sonarr instance at '{host_url}'. "
-                        "Please check that the API key is set correctly in the Buildarr "
-                        "configuration, and that it is set to the value as shown in "
-                        "'Settings -> General -> API Key' on the Radarr instance."
-                    ),
-                ) from None
-            else:
-                raise
-        try:
-            version = cast(str, system_status["version"])
-        except KeyError:
-            raise SonarrSecretsUnauthorizedError(
-                f"Unable to find Sonarr version in system status metadata: {system_status}",
-            ) from None
-        except TypeError as err:
+            with sonarr_api_client(host_url=host_url, api_key=api_key) as api_client:
+                system_status = sonarr.SystemApi(api_client).get_system_status()
+        except UnauthorizedException:
             raise SonarrSecretsUnauthorizedError(
                 (
-                    f"Unable to parse Sonarr system status metadata: {err} "
-                    f"(metadata object: {system_status})"
+                    f"Incorrect API key for the Sonarr instance at '{host_url}'. "
+                    "Please check that the API key is set correctly in the Buildarr "
+                    "configuration, and that it is set to the value as shown in "
+                    "'Settings -> General -> API Key' on the Sonarr instance."
                 ),
             ) from None
         return cls(
-            hostname=hostname,
-            port=port,
-            protocol=protocol,  # type: ignore[arg-type]
+            hostname=cast(NonEmptyStr, hostname),
+            port=cast(Port, port),
+            protocol=cast(SonarrProtocol, protocol),
             url_base=url_base,
-            api_key=api_key,  # type: ignore[arg-type]
-            version=version,
+            api_key=cast(ArrApiKey, api_key),
+            version=system_status.version,
         )
 
     def test(self) -> bool:

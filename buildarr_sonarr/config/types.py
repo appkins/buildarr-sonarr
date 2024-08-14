@@ -13,8 +13,9 @@
 
 
 """
-Sonarr plugin configuration utility classes and functions.
+Configuration base class and field type hints.
 """
+
 
 from __future__ import annotations
 
@@ -23,8 +24,12 @@ from typing import TYPE_CHECKING
 from buildarr.config import ConfigBase
 
 if TYPE_CHECKING:
-    from ..secrets import SonarrSecrets  # noqa: F401
+    from ..secrets import SonarrSecrets
 
+    class SonarrConfigBase(ConfigBase[SonarrSecrets]):
+        ...
 
-class SonarrConfigBase(ConfigBase["SonarrSecrets"]):
-    pass
+else:
+
+    class SonarrConfigBase(ConfigBase):
+        ...

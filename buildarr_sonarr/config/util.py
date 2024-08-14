@@ -13,12 +13,34 @@
 
 
 """
-Sonarr plugin configuration utility classes and functions.
+Configuration utility classes and functions.
 """
+
 
 from __future__ import annotations
 
 from datetime import datetime, timezone
+
+
+def language_parse(value: str) -> str:
+    """
+    Parse a language name into a more standardised format.
+
+    Args:
+        value (str): Language name to parse
+
+    Returns:
+
+    Parsed language name string.
+
+    * `English` -> `english`
+    * `english` -> `english`
+    * `ENGLISH` -> `english`
+    * `Portuguese (Brazil)` -> `portuguese-brazil`
+    * `portuguese_brazil` -> `portuguese-brazil`
+    * `PORTUGUESE-BRAZIL` -> `portuguese-brazil`
+    """
+    return "-".join(value.lower().replace("_", "-").replace("()", "").split(" "))
 
 
 def trakt_expires_encoder(dt: datetime) -> str:

@@ -13,8 +13,9 @@
 
 
 """
-Sonarr plugin exception classes.
+Plugin exception classes.
 """
+
 
 from __future__ import annotations
 
@@ -23,7 +24,7 @@ from buildarr.exceptions import BuildarrError
 
 class SonarrError(BuildarrError):
     """
-    Sonarr plugin exception base class.
+    Plugin exception base class.
     """
 
     pass
@@ -31,7 +32,9 @@ class SonarrError(BuildarrError):
 
 class SonarrAPIError(SonarrError):
     """
-    Sonarr API exception class.
+    Application API exception class.
+
+    The `status_code` attribute can be used to check the returned HTTP status code.
     """
 
     def __init__(self, msg: str, status_code: int) -> None:
@@ -39,9 +42,25 @@ class SonarrAPIError(SonarrError):
         super().__init__(msg)
 
 
+class SonarrConfigError(SonarrError):
+    """
+    Configuration exception base class.
+    """
+
+    pass
+
+
+class SonarrConfigUnsupportedError(SonarrConfigError):
+    """
+    Error raised when Buildarr attemps to manage an unsupported remote instance resource type.
+    """
+
+    pass
+
+
 class SonarrSecretsError(SonarrError):
     """
-    Sonarr plugin secrets exception base class.
+    Secrets exception base class.
     """
 
     pass
@@ -49,7 +68,7 @@ class SonarrSecretsError(SonarrError):
 
 class SonarrSecretsUnauthorizedError(SonarrSecretsError):
     """
-    Error raised when Buildarr was unable to authenticate with Sonarr.
+    Error raised when the Sonarr API key wasn't able to be retrieved.
     """
 
     pass
