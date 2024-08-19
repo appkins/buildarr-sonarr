@@ -95,7 +95,7 @@ class RootFoldersSettings(SonarrConfigBase):
           root_folders:
             delete_unmanaged: false
             definitions:
-              - /path/to/movies
+              - /path/to/tv
     ```
     """
 
@@ -170,7 +170,7 @@ class SonarrMediaManagementSettings(SonarrConfigBase):
     # For more information on how to configure this, check the plugin documentation.
 
     # Movie Naming
-    rename_movies: bool = False
+    rename_episodes: bool = False
     """
     Rename imported files to the defined standard format.
 
@@ -197,12 +197,12 @@ class SonarrMediaManagementSettings(SonarrConfigBase):
     * `space-dash-space` - Replace with a space-separated dash (e.g. `One:Two` → `One - Two`)
     """
 
-    standard_movie_format: NonEmptyStr = "{Movie Title} ({Release Year}) {Quality Full}"  # type: ignore[assignment]
+    standard_episode_format: NonEmptyStr = "{Movie Title} ({Release Year}) {Quality Full}"  # type: ignore[assignment]
     """
     File renaming format for a standard movie file.
     """
 
-    movie_folder_format: NonEmptyStr = "{Movie Title} ({Release Year})"  # type: ignore[assignment]
+    series_folder_format: NonEmptyStr = "{Movie Title} ({Release Year})"  # type: ignore[assignment]
     """
     Renaming format for a movie folder.
     """
@@ -246,7 +246,7 @@ class SonarrMediaManagementSettings(SonarrConfigBase):
 
     * Torrent folders and root folders are on the same physical filesystem.
     * When using containers, both containers use the same directory tree structure for all folders
-      (e.g. `/path/to/torrents` and `/path/to/movies` must be located at the same paths
+      (e.g. `/path/to/torrents` and `/path/to/tv` must be located at the same paths
       according to both containers).
 
     !!! note
@@ -273,9 +273,9 @@ class SonarrMediaManagementSettings(SonarrConfigBase):
     """
 
     # File Management
-    unmonitor_deleted_movies: bool = False
+    unmonitor_deleted_tv: bool = False
     """
-    When set to `true`, movies deleted from disk are automatically unmonitored in Sonarr.
+    When set to `true`, tv deleted from disk are automatically unmonitored in Sonarr.
     """
 
     propers_and_repacks: PropersAndRepacks = PropersAndRepacks.prefer_and_upgrade
@@ -380,11 +380,11 @@ class SonarrMediaManagementSettings(SonarrConfigBase):
 
     _naming_remote_map: List[RemoteMapEntry] = [
         # Episode Naming
-        ("rename_movies", "renameTV", {}),
+        ("rename_episodes", "renameEpisodes", {}),
         ("replace_illegal_characters", "replaceIllegalCharacters", {}),
         ("colon_replacement", "colonReplacementFormat", {}),
-        ("standard_movie_format", "standardMovieFormat", {}),
-        ("movie_folder_format", "movieFolderFormat", {}),
+        ("standard_episode_format", "standardEpisodeFormat", {}),
+        ("series_folder_format", "seriesFolderFormat", {}),
     ]
     _mediamanagement_remote_map: List[RemoteMapEntry] = [
         # Folders
@@ -402,7 +402,7 @@ class SonarrMediaManagementSettings(SonarrConfigBase):
         ),
         ("import_extra_files", "importExtraFiles", {}),
         # File Management
-        ("unmonitor_deleted_movies", "autoUnmonitorPreviouslyDownloadedTV", {}),
+        ("unmonitor_deleted_tv", "autoUnmonitorPreviouslyDownloadedTV", {}),
         ("propers_and_repacks", "downloadPropersAndRepacks", {}),
         ("analyze_video_files", "enableMediaInfo", {}),
         ("rescan_folder_after_refresh", "rescanAfterRefresh", {}),

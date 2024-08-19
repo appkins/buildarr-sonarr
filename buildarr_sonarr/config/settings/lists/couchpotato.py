@@ -52,7 +52,7 @@ class CouchpotatoImportList(ImportList):
 
     only_wanted: bool = True
     """
-    Only add wanted movies.
+    Only add wanted tv.
     """
 
     _implementation: Literal["CouchPotatoImport"] = "CouchPotatoImport"

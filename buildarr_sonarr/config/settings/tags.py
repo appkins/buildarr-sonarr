@@ -42,8 +42,8 @@ class SonarrTagsSettings(SonarrConfigBase):
       settings:
         tags:
           definitions:
-            - movies
-            - anime-movies
+            - tv
+            - anime-tv
     ```
 
     To be able to use those tags in Buildarr, they need to be defined

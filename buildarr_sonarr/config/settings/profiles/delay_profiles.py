@@ -130,7 +130,7 @@ class DelayProfile(SonarrConfigBase):
     """
     Tags to assign to this delay profile.
 
-    This delay profile will apply to movies with at least one matching tag.
+    This delay profile will apply to tv with at least one matching tag.
     """
 
     @classmethod
@@ -253,7 +253,7 @@ class DelayProfile(SonarrConfigBase):
 
 class SonarrDelayProfilesSettings(SonarrConfigBase):
     """
-    Delay profiles facilitate better release matching by delaying grabbing movies
+    Delay profiles facilitate better release matching by delaying grabbing tv
     by a configured amount of time after release.
 
     This gives time for more releases to become available to your configured indexers,
@@ -275,7 +275,7 @@ class SonarrDelayProfilesSettings(SonarrConfigBase):
                 torrent_delay: 1440
                 bypass_if_highest_quality: true
                 tags:
-                  - "anime-movies"
+                  - "anime-tv"
               # Add additional delay profiles here as needed.
               ...
               # Default delay profile goes last, and MUST be defined

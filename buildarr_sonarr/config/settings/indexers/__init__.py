@@ -108,13 +108,13 @@ class SonarrIndexersSettings(SonarrConfigBase):
               download_client: null
               website_url: https://example.com
               tags:
-                - anime-movies
+                - anime-tv
     ```
 
     The following parameters are available for configuring indexers and
     how they are handled by Sonarr.
 
-    For more information on how Sonarr finds movies, refer to the FAQ on
+    For more information on how Sonarr finds tv, refer to the FAQ on
     [WikiArr](https://wiki.servarr.com/sonarr/faq#how-does-sonarr-work).
     """
 

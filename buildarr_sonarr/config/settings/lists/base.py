@@ -35,8 +35,12 @@ logger = getLogger(__name__)
 
 
 class Monitor(BaseEnum):
-    movie_only = "movieOnly"
-    movie_and_collection = "movieAndCollection"
+    all_episodes = "allEpisodes"
+    future_episodes = "futureEpisodes"
+    missing_episodes = "missingEpisodes"
+    existing_episodes = "existingEpisodes"
+    recent_episodes = "recentEpisodes"
+    pilot_episode = "pilotEpisode"
     none = "none"
 
 
@@ -62,9 +66,9 @@ class ImportList(SonarrConfigBase):
     Automatically add series to Sonarr upon syncing.
     """
 
-    monitor: Monitor = Monitor.movie_only
+    monitor: Monitor = Monitor.all_episodes
     """
-    Define how Sonarr should monitor existing and new movies.
+    Define how Sonarr should monitor existing and new series.
 
     Values:
 
@@ -75,7 +79,7 @@ class ImportList(SonarrConfigBase):
 
     search_on_add: bool = False
     """
-    Search for movies on this list when added to the library.
+    Search for tv on this list when added to the library.
     """
 
     minimum_availability: MinimumAvailability = MinimumAvailability.announced
