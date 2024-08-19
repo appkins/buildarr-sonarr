@@ -380,7 +380,7 @@ class SonarrMediaManagementSettings(SonarrConfigBase):
 
     _naming_remote_map: List[RemoteMapEntry] = [
         # Episode Naming
-        ("rename_movies", "renameMovies", {}),
+        ("rename_movies", "renameTV", {}),
         ("replace_illegal_characters", "replaceIllegalCharacters", {}),
         ("colon_replacement", "colonReplacementFormat", {}),
         ("standard_movie_format", "standardMovieFormat", {}),
@@ -402,7 +402,7 @@ class SonarrMediaManagementSettings(SonarrConfigBase):
         ),
         ("import_extra_files", "importExtraFiles", {}),
         # File Management
-        ("unmonitor_deleted_movies", "autoUnmonitorPreviouslyDownloadedMovies", {}),
+        ("unmonitor_deleted_movies", "autoUnmonitorPreviouslyDownloadedTV", {}),
         ("propers_and_repacks", "downloadPropersAndRepacks", {}),
         ("analyze_video_files", "enableMediaInfo", {}),
         ("rescan_folder_after_refresh", "rescanAfterRefresh", {}),

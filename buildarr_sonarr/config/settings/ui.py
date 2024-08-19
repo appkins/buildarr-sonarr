@@ -118,7 +118,7 @@ class SonarrUISettings(SonarrConfigBase):
     * `day-first-padded` - Print day first with padded numbers (e.g. Tue 25/03)
     """
 
-    # Movies
+    # TV
     runtime_format: RuntimeFormat = RuntimeFormat.hours_minutes
     """
     The format of movie runtimes.

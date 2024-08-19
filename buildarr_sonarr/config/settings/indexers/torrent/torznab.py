@@ -52,13 +52,11 @@ class TorznabIndexer(TorrentIndexer):
     """
 
     categories: Set[Union[NabCategory, int]] = {
-        NabCategory.MOVIES_FOREIGN,
-        NabCategory.MOVIES_OTHER,
-        NabCategory.MOVIES_SD,
-        NabCategory.MOVIES_HD,
-        NabCategory.MOVIES_UHD,
-        NabCategory.MOVIES_BLURAY,
-        NabCategory.MOVIES_3D,
+        NabCategory.TV_FOREIGN,
+        NabCategory.TV_OTHER,
+        NabCategory.TV_SD,
+        NabCategory.TV_HD,
+        NabCategory.TV_UHD,
     }
     """
     Categories to monitor for standard/daily shows.
@@ -66,21 +64,18 @@ class TorznabIndexer(TorrentIndexer):
 
     Values:
 
-    * `Movies`
-    * `Movies/Foreign`
-    * `Movies/Other`
-    * `Movies/SD`
-    * `Movies/HD`
-    * `Movies/UHD`
-    * `Movies/BluRay`
-    * `Movies/3D`
-    * `Movies/DVD`
-    * `Movies/WEB-DL`
-    * `Movies/x265`
+    * `TV`
+    * `TV/Foreign`
+    * `TV/Other`
+    * `TV/SD`
+    * `TV/HD`
+    * `TV/UHD`
+    * `TV/WEB-DL`
+    * `TV/x265`
 
     *Changed in version 0.2.1*: The Sonarr-native values for Newznab/Torznab categories
-    (e.g. `Movies/WEB-DL`) can now be specified, instead of the Buildarr-native values
-    (e.g. `Movies-WEBDL`). The old values can still be used.
+    (e.g. `TV/WEB-DL`) can now be specified, instead of the Buildarr-native values
+    (e.g. `TV-WEBDL`). The old values can still be used.
     """
 
     remove_year: bool = False
