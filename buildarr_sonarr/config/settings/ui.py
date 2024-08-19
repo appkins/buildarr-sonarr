@@ -16,7 +16,6 @@
 UI settings configuration.
 """
 
-
 from __future__ import annotations
 
 from typing import Dict, List, Mapping
@@ -25,7 +24,7 @@ import sonarr
 
 from buildarr.config import RemoteMapEntry
 from buildarr.types import BaseEnum, LowerCaseNonEmptyStr
-from pydantic import validator
+from pydantic import field_validator
 from typing_extensions import Self
 
 from ...api import sonarr_api_client
@@ -202,7 +201,7 @@ class SonarrUISettings(SonarrConfigBase):
     The display language for the Sonarr UI.
     """
 
-    @validator("movie_info_language", "ui_language")
+    @field_validator("movie_info_language", "ui_language")
     def disallow_any(cls, value: str) -> str:
         if value == "any":
             raise ValueError(
@@ -210,7 +209,7 @@ class SonarrUISettings(SonarrConfigBase):
             )
         return value
 
-    @validator("ui_language")
+    @field_validator("ui_language")
     def disallow_original(cls, value: str) -> str:
         if value == "original":
             raise ValueError(

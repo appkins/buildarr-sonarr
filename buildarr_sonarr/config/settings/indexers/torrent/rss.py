@@ -16,7 +16,6 @@
 Torrent RSS feed indexer configuration.
 """
 
-
 from __future__ import annotations
 
 from typing import List, Literal, Optional

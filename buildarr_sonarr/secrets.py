@@ -16,7 +16,6 @@
 Plugin secrets file model.
 """
 
-
 from __future__ import annotations
 
 from http import HTTPStatus
@@ -26,7 +25,7 @@ import sonarr
 
 from buildarr.secrets import SecretsPlugin
 from buildarr.types import NonEmptyStr, Port
-from pydantic import validator
+from pydantic import field_validator
 from sonarr.exceptions import UnauthorizedException
 
 from .api import api_get, sonarr_api_client
@@ -38,13 +37,11 @@ if TYPE_CHECKING:
 
     from .config import SonarrConfig
 
-    class _SonarrSecrets(SecretsPlugin[SonarrConfig]):
-        ...
+    class _SonarrSecrets(SecretsPlugin[SonarrConfig]): ...
 
 else:
 
-    class _SonarrSecrets(SecretsPlugin):
-        ...
+    class _SonarrSecrets(SecretsPlugin): ...
 
 
 class SonarrSecrets(_SonarrSecrets):
@@ -68,7 +65,7 @@ class SonarrSecrets(_SonarrSecrets):
             url_base=self.url_base,
         )
 
-    @validator("url_base")
+    @field_validator("url_base")
     def validate_url_base(cls, value: Optional[str]) -> Optional[str]:
         return f"/{value.strip('/')}" if value and value.strip("/") else None
 

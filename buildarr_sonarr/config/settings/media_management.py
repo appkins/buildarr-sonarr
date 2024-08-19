@@ -16,7 +16,6 @@
 Media management settings configuration.
 """
 
-
 from __future__ import annotations
 
 from logging import getLogger
@@ -198,9 +197,7 @@ class SonarrMediaManagementSettings(SonarrConfigBase):
     * `space-dash-space` - Replace with a space-separated dash (e.g. `One:Two` → `One - Two`)
     """
 
-    standard_movie_format: NonEmptyStr = (
-        "{Movie Title} ({Release Year}) {Quality Full}"  # type: ignore[assignment]
-    )
+    standard_movie_format: NonEmptyStr = "{Movie Title} ({Release Year}) {Quality Full}"  # type: ignore[assignment]
     """
     File renaming format for a standard movie file.
     """

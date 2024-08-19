@@ -16,7 +16,6 @@
 Plex import list configuration base class.
 """
 
-
 from __future__ import annotations
 
 from ..base import ImportList

@@ -16,7 +16,6 @@
 Plugin manager class.
 """
 
-
 from __future__ import annotations
 
 from buildarr.manager import ManagerPlugin

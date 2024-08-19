@@ -16,7 +16,6 @@
 Download client settings configuration.
 """
 
-
 from __future__ import annotations
 
 from logging import getLogger
@@ -129,9 +128,7 @@ class SonarrDownloadClientsSettings(SonarrConfigBase):
                     api_downloadclient.implementation,
                 )
                 continue
-            definitions[
-                api_downloadclient.name
-            ] = downloadclient_type._from_remote(  # type: ignore[attr-defined]
+            definitions[api_downloadclient.name] = downloadclient_type._from_remote(  # type: ignore[attr-defined]
                 tag_ids=tag_ids,
                 remote_attrs=api_downloadclient.to_dict(),
             )

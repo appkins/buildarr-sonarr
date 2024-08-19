@@ -16,7 +16,6 @@
 Sonarr import list configuration.
 """
 
-
 from __future__ import annotations
 
 from logging import getLogger
@@ -25,7 +24,7 @@ from typing import Any, Dict, Iterable, List, Literal, Mapping, Optional, Set, U
 from buildarr.config import RemoteMapEntry
 from buildarr.state import state
 from buildarr.types import InstanceName, NonEmptyStr
-from pydantic import AnyHttpUrl, Field, PositiveInt, SecretStr, validator
+from pydantic import AnyHttpUrl, Field, PositiveInt, SecretStr, field_validator
 from typing_extensions import Self
 
 from ....api import api_get
@@ -224,7 +223,7 @@ class SonarrImportList(ImportList):
         """
         return api_get(cls._get_secrets(instance_name), f"/api/v3/{resource_type}")
 
-    @validator("api_key", always=True)
+    @field_validator("api_key", always=True)
     def validate_api_key(
         cls,
         value: Optional[SecretStr],
@@ -247,7 +246,7 @@ class SonarrImportList(ImportList):
             raise ValueError("required if 'instance_name' is undefined")
         return value
 
-    @validator("source_quality_profiles", "source_tags", each_item=True)
+    @field_validator("source_quality_profiles", "source_tags", each_item=True)
     def validate_source_resource_ids(
         cls,
         value: Union[int, str],

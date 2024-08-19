@@ -16,17 +16,15 @@
 Newznab indexer configuration.
 """
 
-
 from __future__ import annotations
 
-from typing import Iterable, List, Literal, Optional, Set, Union
+from typing import List, Literal
 
 from buildarr.config import RemoteMapEntry
-from buildarr.types import NonEmptyStr, Password
-from pydantic import AnyHttpUrl, field_validator
+from buildarr.types import RssUrl
 
-from ..util import NabCategory
 from .base import UsenetIndexer
+
 
 class FanzubIndexer(UsenetIndexer):
     """
@@ -45,13 +43,14 @@ class FanzubIndexer(UsenetIndexer):
 
     anime_standard_format_search: bool = False
     """
-    Also search for anime using the standard numbering. Only applies for Anime series types.
+    Also search for anime using the standard numbering.
+    Only applies for Anime series types.
     """
 
     _implementation = "Fanzub"
     _implementation_name = "Fanzub"
     _config_contract = "FanzubSettings"
-    _remote_map: ClassVar[List[RemoteMapEntry]] = [
+    _remote_map: List[RemoteMapEntry] = [
         ("rss_url", "rssUrl", {"is_field": True}),
         ("anime_standard_format_search", "animeStandardFormatSearch", {"is_field": True}),
     ]

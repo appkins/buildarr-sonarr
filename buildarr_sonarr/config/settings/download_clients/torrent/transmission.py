@@ -16,14 +16,13 @@
 Transmission download client configuration.
 """
 
-
 from __future__ import annotations
 
 from typing import Any, List, Literal, Mapping, Optional
 
 from buildarr.config import RemoteMapEntry
 from buildarr.types import BaseEnum, NonEmptyStr, Port
-from pydantic import SecretStr, validator
+from pydantic import SecretStr, field_validator
 
 from .base import TorrentDownloadClient
 
@@ -135,7 +134,7 @@ class TransmissionDownloadClientBase(TorrentDownloadClient):
         ("add_paused", "addPaused", {"is_field": True}),
     ]
 
-    @validator("directory")
+    @field_validator("directory")
     def category_directory_mutual_exclusion(
         cls,
         value: Optional[str],

@@ -16,14 +16,13 @@
 Custom format condition for matching based on indexer flags.
 """
 
-
 from __future__ import annotations
 
 from typing import Any, Dict, List, Literal, cast
 
 from buildarr.config import RemoteMapEntry
 from buildarr.types import NonEmptyStr
-from pydantic import validator
+from pydantic import field_validator
 
 from .base import Condition
 
@@ -65,7 +64,7 @@ class IndexerFlagCondition(Condition):
         #   2. G_FREELEECH -> g-freeleech
         return value.lower().replace("_", "-").replace(" ", "-")
 
-    @validator("flag")
+    @field_validator("flag")
     def validate_flag(cls, value: str) -> str:
         return cls._flag_parse(value)
 

@@ -16,7 +16,6 @@
 Kodi (XBMC) / Emby metadata configuration.
 """
 
-
 from __future__ import annotations
 
 from typing import List, cast
@@ -25,7 +24,7 @@ import sonarr
 
 from buildarr.config import RemoteMapEntry
 from buildarr.types import NonEmptyStr
-from pydantic import validator
+from pydantic import field_validator
 
 from ...util import language_parse
 from .base import Metadata
@@ -73,7 +72,7 @@ class KodiEmbyMetadata(Metadata):
 
     _implementation: str = "XbmcMetadata"
 
-    @validator("movie_metadata_language")
+    @field_validator("movie_metadata_language")
     def validate_movie_metadata_language(cls, value: str) -> str:
         return language_parse(value)
 

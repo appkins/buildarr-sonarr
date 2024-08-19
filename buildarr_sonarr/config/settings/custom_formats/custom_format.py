@@ -16,7 +16,6 @@
 Custom format definition configuration.
 """
 
-
 from __future__ import annotations
 
 import json
@@ -183,9 +182,7 @@ class CustomFormat(SonarrConfigBase):
                                         f"(trash_id='{self.trash_id}')"
                                     ),
                                 ) from None
-                            self.conditions[
-                                condition_name
-                            ] = condition_type._from_remote(  # type: ignore[attr-defined]
+                            self.conditions[condition_name] = condition_type._from_remote(  # type: ignore[attr-defined]
                                 api_schema_dict=api_condition_schema_dicts[
                                     condition_implementation
                                 ],
@@ -221,9 +218,7 @@ class CustomFormat(SonarrConfigBase):
                         f"found in remote custom format '{api_customformat.name}'"
                     ),
                 ) from None
-            conditions[
-                api_condition.name
-            ] = condition_type._from_remote(  # type: ignore[attr-defined]
+            conditions[api_condition.name] = condition_type._from_remote(  # type: ignore[attr-defined]
                 api_schema_dict=api_condition_schema_dicts[api_condition.implementation],
                 api_condition=api_condition,
             )

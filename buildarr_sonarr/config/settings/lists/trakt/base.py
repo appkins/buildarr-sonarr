@@ -16,7 +16,6 @@
 Trakt import list configuration base class.
 """
 
-
 from __future__ import annotations
 
 import re

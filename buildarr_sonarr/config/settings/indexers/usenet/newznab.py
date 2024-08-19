@@ -16,7 +16,6 @@
 Newznab indexer configuration.
 """
 
-
 from __future__ import annotations
 
 from typing import Iterable, List, Literal, Optional, Set, Union
@@ -35,6 +34,7 @@ class NewznabIndexer(UsenetIndexer):
 
     Sonarr defines presets for several popular sites.
     """
+
     # Monitor for new releases using a Newznab-compatible Usenet indexer or site.
 
     type: Literal["newznab"] = "newznab"
@@ -104,7 +104,7 @@ class NewznabIndexer(UsenetIndexer):
     (e.g. `TV/WEB-DL`) can now be specified, instead of the Buildarr-native values
     (e.g. `TV-WEBDL`). The old values can still be used.
     """
-    
+
     anime_standard_format_search: bool = False
     """
     Also search for anime using the standard numbering. Only applies for Anime series types.

@@ -16,14 +16,13 @@
 Plugin and instance configuration.
 """
 
-
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Dict, Optional
 
 from buildarr.config import ConfigPlugin
 from buildarr.types import NonEmptyStr, Port
-from pydantic import validator
+from pydantic import field_validator
 from typing_extensions import Self
 
 from ..types import ArrApiKey, SonarrProtocol
@@ -32,13 +31,11 @@ from .settings import SonarrSettings
 if TYPE_CHECKING:
     from ..secrets import SonarrSecrets
 
-    class _SonarrInstanceConfig(ConfigPlugin[SonarrSecrets]):
-        ...
+    class _SonarrInstanceConfig(ConfigPlugin[SonarrSecrets]): ...
 
 else:
 
-    class _SonarrInstanceConfig(ConfigPlugin):
-        ...
+    class _SonarrInstanceConfig(ConfigPlugin): ...
 
 
 class SonarrInstanceConfig(_SonarrInstanceConfig):
@@ -157,7 +154,7 @@ class SonarrInstanceConfig(_SonarrInstanceConfig):
     Configuration options for Sonarr itself are set within this structure.
     """
 
-    @validator("url_base")
+    @field_validator("url_base")
     def validate_url_base(cls, value: Optional[str]) -> Optional[str]:
         return f"/{value.strip('/')}" if value and value.strip("/") else None
 

@@ -16,7 +16,6 @@
 uTorrent download client configuration.
 """
 
-
 from __future__ import annotations
 
 from typing import List, Literal, Optional

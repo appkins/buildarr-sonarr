@@ -16,7 +16,6 @@
 Usenet indexer configuration base class.
 """
 
-
 from __future__ import annotations
 
 from ..base import Indexer

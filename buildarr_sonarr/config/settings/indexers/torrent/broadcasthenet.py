@@ -16,16 +16,16 @@
 BroacasTheNet indexer configuration.
 """
 
-
 from __future__ import annotations
 
-from typing import List, Literal, Set
+from typing import List, Literal
 
 from buildarr.config import RemoteMapEntry
-from buildarr.types import BaseEnum, NonEmptyStr, Password
+from buildarr.types import Password
 from pydantic import AnyHttpUrl
 
 from .base import TorrentIndexer
+
 
 class BroadcasthenetIndexer(TorrentIndexer):
     """

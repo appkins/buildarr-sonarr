@@ -16,14 +16,13 @@
 Custom format condition for matching based on media language.
 """
 
-
 from __future__ import annotations
 
 from typing import Any, Dict, List, Literal, cast
 
 from buildarr.config import RemoteMapEntry
 from buildarr.types import NonEmptyStr
-from pydantic import validator
+from pydantic import field_validator
 
 from ....util import language_parse
 from .base import Condition
@@ -55,7 +54,7 @@ class LanguageCondition(Condition):
 
     _implementation: Literal["LanguageSpecification"] = "LanguageSpecification"
 
-    @validator("language")
+    @field_validator("language")
     def validate_language(cls, value: str) -> str:
         return language_parse(value)
 

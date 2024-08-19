@@ -16,7 +16,6 @@
 Indexer configuration utility classes and functions.
 """
 
-
 from __future__ import annotations
 
 from logging import getLogger
@@ -56,6 +55,7 @@ class NabCategory(BaseEnum):
     @classmethod
     def encode(cls, value: Union[Self, int]) -> int:
         return value if isinstance(value, int) else cast(int, value.value)
+
 
 class FilelistCategory(BaseEnum):
     """

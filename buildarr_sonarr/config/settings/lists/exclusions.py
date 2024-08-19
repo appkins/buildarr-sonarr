@@ -16,7 +16,6 @@
 Import list exclusions settings configuration.
 """
 
-
 from __future__ import annotations
 
 from logging import getLogger

@@ -16,7 +16,6 @@
 Quality settings configuration.
 """
 
-
 from __future__ import annotations
 
 import json
@@ -28,7 +27,7 @@ import sonarr
 from buildarr.config import ConfigTrashIDNotFoundError
 from buildarr.state import state
 from buildarr.types import TrashID
-from pydantic import Field, validator
+from pydantic import Field, field_validator
 from typing_extensions import Self
 
 from ...api import sonarr_api_client
@@ -100,7 +99,7 @@ class QualityDefinition(SonarrConfigBase):
     If set to `null` or `400`, the maximum bit rate will be unlimited.
     """
 
-    @validator("preferred")
+    @field_validator("preferred")
     def validate_preferred(
         cls,
         value: Optional[float],
@@ -120,7 +119,7 @@ class QualityDefinition(SonarrConfigBase):
             pass
         return value
 
-    @validator("max")
+    @field_validator("max")
     def validate_max(
         cls,
         value: Optional[float],

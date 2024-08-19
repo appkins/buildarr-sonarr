@@ -16,7 +16,6 @@
 NZBGet download client configuration.
 """
 
-
 from __future__ import annotations
 
 from logging import getLogger

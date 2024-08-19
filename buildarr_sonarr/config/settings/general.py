@@ -16,7 +16,6 @@
 General settings configuration.
 """
 
-
 from __future__ import annotations
 
 from ipaddress import IPv4Address

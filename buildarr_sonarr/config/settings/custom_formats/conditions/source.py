@@ -16,7 +16,6 @@
 Custom format condition for matching based on media source type.
 """
 
-
 from __future__ import annotations
 
 from typing import Any, Dict, List, Literal, cast

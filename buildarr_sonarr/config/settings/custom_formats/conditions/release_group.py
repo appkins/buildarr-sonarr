@@ -16,7 +16,6 @@
 Custom format condition for matching based on release group.
 """
 
-
 from __future__ import annotations
 
 from typing import List, Literal

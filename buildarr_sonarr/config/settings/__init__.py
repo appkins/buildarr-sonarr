@@ -16,7 +16,6 @@
 Instance settings configuration.
 """
 
-
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -30,7 +29,6 @@ from .general import SonarrGeneralSettings
 from .indexers import SonarrIndexersSettings
 from .media_management import SonarrMediaManagementSettings
 from .metadata import SonarrMetadataSettings
-from .notifications import SonarrNotificationsSettings
 from .profiles import SonarrProfilesSettings
 from .quality import SonarrQualitySettings
 from .tags import SonarrTagsSettings
@@ -51,7 +49,6 @@ class SonarrSettings(SonarrConfigBase):
     download_clients: SonarrDownloadClientsSettings = SonarrDownloadClientsSettings()
     # TODO: Enable import lists.
     # lists: SonarrListsSettings = SonarrListsSettings()
-    notifications: SonarrNotificationsSettings = SonarrNotificationsSettings()
     metadata: SonarrMetadataSettings = SonarrMetadataSettings()
     tags: SonarrTagsSettings = SonarrTagsSettings()
     general: SonarrGeneralSettings = SonarrGeneralSettings()
@@ -118,12 +115,6 @@ class SonarrSettings(SonarrConfigBase):
                 #     remote=remote.lists,
                 #     check_unmanaged=check_unmanaged,
                 # ),
-                self.notifications.update_remote(
-                    tree=f"{tree}.notifications",
-                    secrets=secrets,
-                    remote=remote.notifications,
-                    check_unmanaged=check_unmanaged,
-                ),
                 self.metadata.update_remote(
                     tree=f"{tree}.metadata",
                     secrets=secrets,
@@ -167,11 +158,6 @@ class SonarrSettings(SonarrConfigBase):
                 #     secrets=secrets,
                 #     remote=remote.lists,
                 # ),
-                self.notifications.delete_remote(
-                    tree=f"{tree}.notifications",
-                    secrets=secrets,
-                    remote=remote.notifications,
-                ),
                 self.tags.delete_remote(f"{tree}.tags", secrets, remote.tags),
                 self.custom_formats.delete_remote(
                     tree=f"{tree}.custom_formats",
