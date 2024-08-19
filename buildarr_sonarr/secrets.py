@@ -25,7 +25,7 @@ import sonarr
 
 from buildarr.secrets import SecretsPlugin
 from buildarr.types import NonEmptyStr, Port
-from pydantic import field_validator
+from pydantic import validator
 from sonarr.exceptions import UnauthorizedException
 
 from .api import api_get, sonarr_api_client
@@ -65,7 +65,7 @@ class SonarrSecrets(_SonarrSecrets):
             url_base=self.url_base,
         )
 
-    @field_validator("url_base")
+    @validator("url_base")
     def validate_url_base(cls, value: Optional[str]) -> Optional[str]:
         return f"/{value.strip('/')}" if value and value.strip("/") else None
 

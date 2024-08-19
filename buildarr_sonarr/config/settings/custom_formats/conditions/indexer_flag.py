@@ -22,7 +22,7 @@ from typing import Any, Dict, List, Literal, cast
 
 from buildarr.config import RemoteMapEntry
 from buildarr.types import NonEmptyStr
-from pydantic import field_validator
+from pydantic import validator
 
 from .base import Condition
 
@@ -64,7 +64,7 @@ class IndexerFlagCondition(Condition):
         #   2. G_FREELEECH -> g-freeleech
         return value.lower().replace("_", "-").replace(" ", "-")
 
-    @field_validator("flag")
+    @validator("flag")
     def validate_flag(cls, value: str) -> str:
         return cls._flag_parse(value)
 

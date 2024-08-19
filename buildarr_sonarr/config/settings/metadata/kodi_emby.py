@@ -24,7 +24,7 @@ import sonarr
 
 from buildarr.config import RemoteMapEntry
 from buildarr.types import NonEmptyStr
-from pydantic import field_validator
+from pydantic import validator
 
 from ...util import language_parse
 from .base import Metadata
@@ -72,7 +72,7 @@ class KodiEmbyMetadata(Metadata):
 
     _implementation: str = "XbmcMetadata"
 
-    @field_validator("movie_metadata_language")
+    @validator("movie_metadata_language")
     def validate_movie_metadata_language(cls, value: str) -> str:
         return language_parse(value)
 

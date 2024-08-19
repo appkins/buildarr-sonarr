@@ -22,7 +22,7 @@ from typing import Any, List, Literal, Mapping, Optional
 
 from buildarr.config import RemoteMapEntry
 from buildarr.types import BaseEnum, NonEmptyStr, Port
-from pydantic import SecretStr, field_validator
+from pydantic import SecretStr, validator
 
 from .base import TorrentDownloadClient
 
@@ -134,7 +134,7 @@ class TransmissionDownloadClientBase(TorrentDownloadClient):
         ("add_paused", "addPaused", {"is_field": True}),
     ]
 
-    @field_validator("directory")
+    @validator("directory")
     def category_directory_mutual_exclusion(
         cls,
         value: Optional[str],

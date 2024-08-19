@@ -22,7 +22,7 @@ from typing import Iterable, List, Literal, Optional, Set, Union
 
 from buildarr.config import RemoteMapEntry
 from buildarr.types import NonEmptyStr, Password
-from pydantic import AnyHttpUrl, field_validator
+from pydantic import AnyHttpUrl, validator
 
 from ..util import NabCategory
 from .base import UsenetIndexer
@@ -140,7 +140,7 @@ class NewznabIndexer(UsenetIndexer):
         ),
     ]
 
-    @field_validator("categories", "anime_categories")
+    @validator("categories", "anime_categories")
     def validate_categories(
         cls,
         value: Iterable[Union[NabCategory, int]],

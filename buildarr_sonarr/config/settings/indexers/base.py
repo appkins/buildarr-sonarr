@@ -25,7 +25,7 @@ import sonarr
 
 from buildarr.config import RemoteMapEntry
 from buildarr.types import NonEmptyStr
-from pydantic import Field, field_validator
+from pydantic import Field, validator
 from typing_extensions import Self
 
 from ....api import sonarr_api_client
@@ -87,7 +87,7 @@ class Indexer(SonarrConfigBase):
     _implementation: str
     _remote_map: List[RemoteMapEntry] = []
 
-    @field_validator("multi_languages")
+    @validator("multi_languages")
     def validate_multi_languages(cls, value: Set[str]) -> Set[str]:
         return set(language_parse(language) for language in value)
 

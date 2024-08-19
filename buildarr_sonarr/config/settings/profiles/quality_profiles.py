@@ -25,7 +25,7 @@ import sonarr
 
 from buildarr.config import RemoteMapEntry
 from buildarr.types import NonEmptyStr
-from pydantic import Field, field_validator
+from pydantic import Field, validator
 from typing_extensions import Annotated, Self
 
 from ....api import sonarr_api_client
@@ -148,7 +148,7 @@ class QualityProfile(SonarrConfigBase):
     * `portuguese-brazil`
     """
 
-    @field_validator("qualities")
+    @validator("qualities")
     def validate_qualities(
         cls,
         value: List[Union[str, QualityGroup]],
@@ -177,7 +177,7 @@ class QualityProfile(SonarrConfigBase):
                 quality_name_map[name] = quality
         return value
 
-    @field_validator("upgrade_until_quality")
+    @validator("upgrade_until_quality")
     def validate_upgrade_until_quality(
         cls,
         value: Optional[str],
@@ -205,7 +205,7 @@ class QualityProfile(SonarrConfigBase):
             raise ValueError("must be set to a value enabled in 'qualities'")
         return value
 
-    @field_validator("upgrade_until_custom_format_score")
+    @validator("upgrade_until_custom_format_score")
     def validate_upgrade_until_custom_format_score(cls, value: int, values: Dict[str, Any]) -> int:
         try:
             minimum_custom_format_score = values["minimum_custom_format_score"]
@@ -220,7 +220,7 @@ class QualityProfile(SonarrConfigBase):
             )
         return value
 
-    @field_validator("custom_formats")
+    @validator("custom_formats")
     def validate_custom_format(cls, value: List[CustomFormatScore]) -> List[CustomFormatScore]:
         custom_format_names: Dict[str, Optional[int]] = {}
         custom_formats: List[CustomFormatScore] = []
@@ -240,7 +240,7 @@ class QualityProfile(SonarrConfigBase):
             custom_formats.append(cf)
         return custom_formats
 
-    @field_validator("language")
+    @validator("language")
     def validate_language(cls, value: str) -> str:
         return language_parse(value)
 

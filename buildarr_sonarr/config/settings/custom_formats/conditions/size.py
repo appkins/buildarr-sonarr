@@ -21,7 +21,7 @@ from __future__ import annotations
 from typing import Any, List, Literal, Mapping
 
 from buildarr.config import RemoteMapEntry
-from pydantic import Field, field_validator
+from pydantic import Field, validator
 
 from .base import Condition
 
@@ -54,7 +54,7 @@ class SizeCondition(Condition):
         ("max", "max", {"is_field": True}),
     ]
 
-    @field_validator("max")
+    @validator("max")
     def validate_min_max(cls, value: int, values: Mapping[str, Any]) -> int:
         try:
             size_min: int = values["min"]

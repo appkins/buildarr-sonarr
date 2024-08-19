@@ -22,7 +22,7 @@ from typing import Any, Dict, List, Literal, cast
 
 from buildarr.config import RemoteMapEntry
 from buildarr.types import NonEmptyStr
-from pydantic import field_validator
+from pydantic import validator
 
 from ....util import language_parse
 from .base import Condition
@@ -54,7 +54,7 @@ class LanguageCondition(Condition):
 
     _implementation: Literal["LanguageSpecification"] = "LanguageSpecification"
 
-    @field_validator("language")
+    @validator("language")
     def validate_language(cls, value: str) -> str:
         return language_parse(value)
 

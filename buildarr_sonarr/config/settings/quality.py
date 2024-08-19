@@ -27,7 +27,7 @@ import sonarr
 from buildarr.config import ConfigTrashIDNotFoundError
 from buildarr.state import state
 from buildarr.types import TrashID
-from pydantic import Field, field_validator
+from pydantic import Field, validator
 from typing_extensions import Self
 
 from ...api import sonarr_api_client
@@ -99,7 +99,7 @@ class QualityDefinition(SonarrConfigBase):
     If set to `null` or `400`, the maximum bit rate will be unlimited.
     """
 
-    @field_validator("preferred")
+    @validator("preferred")
     def validate_preferred(
         cls,
         value: Optional[float],
@@ -119,7 +119,7 @@ class QualityDefinition(SonarrConfigBase):
             pass
         return value
 
-    @field_validator("max")
+    @validator("max")
     def validate_max(
         cls,
         value: Optional[float],
